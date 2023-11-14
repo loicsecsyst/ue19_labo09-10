@@ -11,7 +11,8 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: ${{ github.repository }}
+  IMAGE_NAME: ghcr.io/loicsecsyst/ue19_labo09-10:${{ github.event_name == 'push' && contains(github.ref, 'refs/tags') && github.event_name != 'pull_request'  }}
+
 
 jobs:
   build-and-publish:
