@@ -20,6 +20,14 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
+        
+      # Install Trivy
+      - name: Install Trivy
+        run: |
+          wget https://github.com/aquasecurity/trivy/releases/download/v0.47.0/trivy_0.47.0_Linux-64bit.tar.gz
+          tar zxvf trivy_0.47.0_Linux-64bit.tar.gz
+          sudo mv trivy /usr/local/bin/
+          rm trivy_0.47.0_Linux-64bit.tar.gz
 
       - name: Install cosign
         if: github.event_name != 'pull_request'
@@ -55,8 +63,10 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
-      - name: Security Scan
-        uses: aquasec/trivy-action@v0.47.0
+      # Analyser l'image Docker avec Trivy
+      - name: Scan Docker image with Trivy
+        run: |
+          trivy image --exit-code 1 --severity HIGH,CRITICAL pun-api-app:latest
 
       - name: Install cosign for signing
         if: github.event_name != 'pull_request'
