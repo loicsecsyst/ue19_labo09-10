@@ -82,6 +82,11 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
+      - name: Scan des vulnérabilités avec Trivy
+        uses: aquasecurity/trivy-action@v0.14.0
+        with:
+          image-ref: ${{ steps.build-and-push.outputs.image }}
+        
       # Sign the resulting Docker image digest except on PRs.
       # This will only write to the public Rekor transparency log when the Docker
       # repository is public to avoid leaking data.  If you would like to publish
