@@ -14,7 +14,7 @@ env:
   IMAGE_NAME: ${{ github.repository }}
 
 jobs:
-  build:
+  build-and-publish:
     runs-on: ubuntu-latest
 
     steps:
@@ -55,13 +55,11 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
-     - name: Scan Docker image for vulnerabilities
-     uses: aquasecurity/trivy-action@v0.17.2
-     with:
-       image-ref: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
-       format: "table"
-
-
+      - name: Scan Docker image for vulnerabilities
+        uses: aquasecurity/trivy-action@v0.19.2
+        with:
+          image-ref: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
+          format: "table"
 
       - name: Install cosign for signing
         if: github.event_name != 'pull_request'
