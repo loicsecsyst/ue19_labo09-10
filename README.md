@@ -10,9 +10,9 @@ How to Use
 
     1.Clone or download the repository.
     2.Install the required requests library using the following command:
-    `pip install requests`
+    ```pip install requests```
     3.run the script
-    `python pun_api_script.py`
+    ```python pun_api_script.py```
     This will display a random pun retrieved from the PunAPI.
 
 Code Overview
