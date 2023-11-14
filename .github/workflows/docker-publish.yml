@@ -81,7 +81,10 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
-      - name: Debug outputrun: echo "Image name: ${{ steps.build-and-push.outputs.image }}"
+          
+      - name: Debug output
+        run: echo "Image name:${{ steps.build-and-push.outputs.image }}"
+
 
       - name: Scan des vulnérabilités avec Trivy
         uses: aquasecurity/trivy-action@master
